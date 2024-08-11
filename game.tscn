@@ -1,0 +1,37 @@
+[gd_scene load_steps=5 format=3 uid="uid://ck0roe62mk3sh"]
+
+[ext_resource type="PackedScene" uid="uid://d1rdqjkd0da6y" path="res://player.tscn" id="1_2p6xq"]
+[ext_resource type="Script" path="res://starter_obstacle.gd" id="3_pe635"]
+[ext_resource type="Script" path="res://obstacle_spawner.gd" id="3_ye5xi"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_86taq"]
+size = Vector2(1652, 20)
+
+[node name="Game" type="Node2D"]
+
+[node name="Player" parent="." instance=ExtResource("1_2p6xq")]
+position = Vector2(217, 564)
+collision_layer = 3
+
+[node name="ObstacleSpawner" type="Node2D" parent="."]
+script = ExtResource("3_ye5xi")
+
+[node name="SpawnPosition" type="Marker2D" parent="ObstacleSpawner"]
+position = Vector2(1456, 657)
+
+[node name="StarterObstacle" type="StaticBody2D" parent="."]
+position = Vector2(773, 674)
+script = ExtResource("3_pe635")
+metadata/_edit_group_ = true
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="StarterObstacle"]
+shape = SubResource("RectangleShape2D_86taq")
+
+[node name="ColorRect" type="ColorRect" parent="StarterObstacle"]
+offset_left = -831.0
+offset_top = -11.0
+offset_right = -791.0
+offset_bottom = 29.0
+scale = Vector2(41.48, 2.76)
+
+[connection signal="spawn_new_obstacle" from="Player" to="ObstacleSpawner" method="_on_player_spawn_new_obstacle"]
